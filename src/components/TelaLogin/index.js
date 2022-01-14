@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
+import logo from "./logo.png"
 
 function TelaLogin () {
     const [email, setEmail] = useState ("");
     const [password, setPassword] = useState ("");
+    const navigate = useNavigate()
 
     const formData = {
         email: email,
@@ -22,7 +24,13 @@ function TelaLogin () {
 
         function tratarSucesso (sucesso){
             console.log(sucesso);
-            //Trocar para rota Home
+
+            if (sucesso.data.membership==null){
+                navigate('/subscriptions')
+            }
+            else {
+                navigate('/home')
+            }
         }
 
         function tratarErro (falha){
@@ -34,11 +42,12 @@ function TelaLogin () {
     
     return(
         <Container>
-            <img src="./Logo.png" />
+            <StyledImg src={logo} />
+
             <form onSubmit={handleLogin}>
                 <StyledInput type="email" placeholder="E-mail" onChange={(event)=>setEmail(event.target.value)} /> <br/>
                 <StyledInput type="password" placeholder="Senha" onChange={(event)=>setPassword(event.target.value)} /> <br/>
-                <StyledButton type="submit">CADASTRAR</StyledButton>
+                <StyledButton type="submit">ENTRAR</StyledButton>
             </form>
             <StyledLink to="/sign-up">Não possuí uma conta? Cadastre-se</StyledLink>
         </Container>
@@ -79,3 +88,7 @@ const StyledLink = styled(Link)`
     font-family: Roboto;
     color: white;
 `;
+
+const StyledImg = styled.img`
+    margin-bottom: 100px;
+`

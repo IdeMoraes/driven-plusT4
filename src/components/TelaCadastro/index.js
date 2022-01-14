@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 
 function TelaCadastro () {
@@ -8,6 +8,7 @@ function TelaCadastro () {
     const [cpf, setCpf] = useState ("");
     const [email, setEmail] = useState ("");
     const [password, setPassword] = useState ("");
+    const navigate = useNavigate();
 
     const formData = {
         email: email,
@@ -15,6 +16,8 @@ function TelaCadastro () {
         cpf: cpf,
         password: password
     }
+
+
 
     function handleSignUp (event){
         event.preventDefault();
@@ -26,7 +29,7 @@ function TelaCadastro () {
 
         function tratarSucesso (sucesso){
             console.log(sucesso);
-            //Trocar para rota Login
+            navigate('/')
         }
 
         function tratarErro (falha){
