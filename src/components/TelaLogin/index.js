@@ -1,13 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import logo from "./logo.png"
+import TokenContext from "../../contexts/TokenContext";
 
 function TelaLogin () {
     const [email, setEmail] = useState ("");
     const [password, setPassword] = useState ("");
     const navigate = useNavigate()
+    const { token, setToken } = useContext(TokenContext);
 
     const formData = {
         email: email,
@@ -24,6 +26,7 @@ function TelaLogin () {
 
         function tratarSucesso (sucesso){
             console.log(sucesso);
+            setToken(sucesso.data.token);////////////////////////////////////////////////////////////////////
 
             if (sucesso.data.membership==null){
                 navigate('/subscriptions')
