@@ -2,11 +2,13 @@ import React,{ useContext, useEffect, useState } from "react"
 import TokenContext from "../../contexts/TokenContext";
 import axios from "axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 function TelaPlanos () {
     const token  = useContext(TokenContext);
     const [items, setItems] = useState([]);
+    const navigate = useNavigate()
 
     const config = {
         headers: {
@@ -35,22 +37,21 @@ function TelaPlanos () {
     return(
         <Container>
             <StyledTitle>Escolha seu Plano</StyledTitle> <br/>
-            <div>{token.token}</div>
+
             {items.map(item =>
-            <StyledPlano >
+            <StyledPlano  onClick={()=>EscolherPlano(item.id)}>
                 <img src={item.image} />
                 <StyledPrice>R$ {item.price}</StyledPrice>
-                <StyledLink to={`/subscriptions/${item.id}`}></StyledLink>
             </StyledPlano>
             )}
         </Container>
     )
-}
 
-function EscolherPlano (o){
-    alert()
+    function EscolherPlano (idPlano){
+        navigate(`/subscriptions/${idPlano}`)
+    }
+    
 }
-
 
 export default TelaPlanos;
 
@@ -69,6 +70,7 @@ const StyledTitle = styled.div`
     font-weight: bold;
     font-size: 32px;
     color: #FFFFFF;
+    margin-bottom: 24px;
 `;
 
 const StyledPlano = styled.div`
@@ -89,15 +91,6 @@ const StyledPrice = styled.div`
     font-size: 24px;
     color: #FFFFFF;
 `;
-
-const StyledLink = styled(Link)`
-position: absolute;
-top: 0;
-bottom: 0;      
-left: 0;
-right: 0;
-z-index: 999;
-`
 
 const StyledImg = styled.img`
     margin-bottom: 100px;

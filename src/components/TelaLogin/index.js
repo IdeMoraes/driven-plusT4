@@ -26,7 +26,7 @@ function TelaLogin () {
 
         function tratarSucesso (sucesso){
             console.log(sucesso);
-            setToken(sucesso.data.token);////////////////////////////////////////////////////////////////////
+            setToken(sucesso.data.token);
 
             if (sucesso.data.membership==null){
                 navigate('/subscriptions')
