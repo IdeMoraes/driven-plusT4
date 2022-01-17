@@ -2,15 +2,25 @@ import React, { useContext } from "react"
 import PlanoContext from "../../contexts/PlanoContext";
 import BeneficiosContext from "../../contexts/BeneficiosContext";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UsuarioContext from "../../contexts/UsuarioContext";
+import TokenContext from "../../contexts/TokenContext";
+import axios from "axios";
 
 function TelaHome () {
     const { plano, setPlano } = useContext(PlanoContext);
     const {beneficios, setBeneficios} = useContext(BeneficiosContext);
     const { usuario, setUsuario } = useContext(UsuarioContext);
+    const { token, setToken } = useContext(TokenContext);
+    const navigate = useNavigate();
 
     console.log(beneficios);
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token.token}`
+        }
+    }
 
     return(
         <Container>
@@ -22,10 +32,30 @@ function TelaHome () {
             )}
 
             <StyledLink to="/subscriptions"><p>Mudar plano</p></StyledLink>
+            <StyledButton onClick={handleDelete}>Cancelar plano</StyledButton>
 
         </Container>
 
     )
+    
+
+    function handleDelete(){
+
+        const promise = axios.delete('https://mock-api.driven.com.br/api/v4/driven-plus/auth/sign-up', config);
+
+        promise.then(tratarSucesso);
+        promise.catch(tratarErro);
+
+        function tratarSucesso (sucesso){
+            console.log(sucesso);
+            navigate('/subscriptions')
+        }
+
+        function tratarErro (falha){
+            console.log(falha.response)
+            alert(`Falha na exclusão`)
+        }  
+    }
 }
 
 export default TelaHome;
@@ -80,4 +110,13 @@ const StyledLink = styled(Link)`
     display: flex;
     justify-content: center;
     align-items:center;
+`;
+
+const StyledButton = styled.button`
+    margin-top: 8px;
+    margin-bottom: 24px;
+    width: 299px;
+    height: 52px;
+    border-radius: 8px;
+    background-color: #FF4747;
 `;
