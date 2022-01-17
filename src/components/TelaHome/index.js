@@ -18,7 +18,7 @@ function TelaHome () {
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${token.token}`
+            "Authorization": `Bearer ${token}`
         }
     }
 
@@ -41,7 +41,7 @@ function TelaHome () {
 
     function handleDelete(){
 
-        const promise = axios.delete('https://mock-api.driven.com.br/api/v4/driven-plus/auth/sign-up', config);
+        const promise = axios.delete('https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions', config);
 
         promise.then(tratarSucesso);
         promise.catch(tratarErro);
