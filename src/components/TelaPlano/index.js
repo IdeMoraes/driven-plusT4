@@ -4,12 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from "styled-components";
 import TokenContext from "../../contexts/TokenContext";
 import PlanoContext from "../../contexts/PlanoContext";
-
+import BeneficiosContext from  "../../contexts/BeneficiosContext";
 
 function TelaPlano () {
     const params = useParams();
     const token  = useContext(TokenContext);
     const { plano, setPlano } = useContext(PlanoContext);
+    const { beneficios, setBeneficios } = useContext(BeneficiosContext);
     const [items, setItems] = useState([]);
     const navigate = useNavigate()
 
@@ -55,6 +56,7 @@ function TelaPlano () {
 
     return(
         <Container>
+
             <StyledImg src={items.image} />
             <StyledTitle>{items.name}</StyledTitle> <br/>
             <PerksContainer>
@@ -89,10 +91,10 @@ function TelaPlano () {
     
             function tratarSucesso (sucesso){
                 //Faltando Modal
-                //Quando vai pra home não carrega
                 console.log(sucesso);
-                setPlano(sucesso.data)
-                navigate('/home')
+                setPlano(sucesso.data.membership);
+                setBeneficios(sucesso.data.membership.perks);
+                navigate('/home');
             }
     
             function tratarErro (falha){
