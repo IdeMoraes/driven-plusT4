@@ -4,12 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import logo from "./logo.png"
 import TokenContext from "../../contexts/TokenContext";
+import PlanoContext from "../../contexts/PlanoContext";
+import BeneficiosContext from "../../contexts/BeneficiosContext";
 
 function TelaLogin () {
     const [email, setEmail] = useState ("");
     const [password, setPassword] = useState ("");
     const navigate = useNavigate()
     const { token, setToken } = useContext(TokenContext);
+    const { plano, setPlano } = useContext(PlanoContext);
+    const {beneficios, setBeneficios} = useContext(BeneficiosContext)
 
     const formData = {
         email: email,
@@ -32,13 +36,15 @@ function TelaLogin () {
                 navigate('/subscriptions')
             }
             else {
+                setPlano(sucesso.data.membership)
+                setBeneficios(sucesso.data.membership.perks)
                 navigate('/home')
             }
         }
 
         function tratarErro (falha){
             console.log(falha.response)
-            alert('Que pena! Algo deu errado.')
+            alert(`Falha no login. ${falha.response.data.message}`)
         }
 
     }

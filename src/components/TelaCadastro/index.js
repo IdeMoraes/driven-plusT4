@@ -34,7 +34,7 @@ function TelaCadastro () {
 
         function tratarErro (falha){
             console.log(falha.response)
-            alert('Que pena! Algo deu errado.')
+            alert(`Falha no cadastro. ${falha.response.data.message}`)
         }
 
     }
