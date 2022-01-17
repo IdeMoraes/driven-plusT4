@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import TokenContext from "./contexts/TokenContext";
 import PlanoContext from "./contexts/PlanoContext";
 import BeneficiosContext from "./contexts/BeneficiosContext";
+import UsuarioContext from "./contexts/UsuarioContext";
 
 import TelaLogin from './components/TelaLogin';
 import TelaCadastro from './components/TelaCadastro';
@@ -17,8 +18,10 @@ function App() {
   const [token, setToken] = useState("");
   const [plano, setPlano] = useState("");
   const [beneficios, setBeneficios] = useState("");
+  const [usuario, setUsuario] = useState("");
 
   return (
+    <UsuarioContext.Provider value={{usuario, setUsuario}}>
     <TokenContext.Provider value={{token, setToken}}>
       <PlanoContext.Provider value={{plano,setPlano}}>
         <BeneficiosContext.Provider value={{beneficios,setBeneficios}}>
@@ -34,6 +37,7 @@ function App() {
         </BeneficiosContext.Provider>
       </PlanoContext.Provider>
     </TokenContext.Provider>
+    </UsuarioContext.Provider>
   );
 }
 

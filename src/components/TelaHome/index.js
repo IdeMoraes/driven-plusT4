@@ -3,17 +3,19 @@ import PlanoContext from "../../contexts/PlanoContext";
 import BeneficiosContext from "../../contexts/BeneficiosContext";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import UsuarioContext from "../../contexts/UsuarioContext";
 
 function TelaHome () {
     const { plano, setPlano } = useContext(PlanoContext);
     const {beneficios, setBeneficios} = useContext(BeneficiosContext);
+    const { usuario, setUsuario } = useContext(UsuarioContext);
 
     console.log(beneficios);
 
     return(
         <Container>
             <StyledTopo><StyledImg src={plano.image}/></StyledTopo>
-            <StyledCumprimento>Olá, fulano</StyledCumprimento>
+            <StyledCumprimento>Olá, {usuario.name}</StyledCumprimento>
 
             {beneficios.map(item =>
             <StyledAnchor  href={item.link} target="_blank"><p>{item.title}</p></StyledAnchor>

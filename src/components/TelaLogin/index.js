@@ -6,6 +6,7 @@ import logo from "./logo.png"
 import TokenContext from "../../contexts/TokenContext";
 import PlanoContext from "../../contexts/PlanoContext";
 import BeneficiosContext from "../../contexts/BeneficiosContext";
+import UsuarioContext from "../../contexts/UsuarioContext";
 
 function TelaLogin () {
     const [email, setEmail] = useState ("");
@@ -13,6 +14,7 @@ function TelaLogin () {
     const navigate = useNavigate()
     const { token, setToken } = useContext(TokenContext);
     const { plano, setPlano } = useContext(PlanoContext);
+    const { usuario, setUsuario } = useContext(UsuarioContext);
     const {beneficios, setBeneficios} = useContext(BeneficiosContext)
 
     const formData = {
@@ -36,6 +38,7 @@ function TelaLogin () {
                 navigate('/subscriptions')
             }
             else {
+                setUsuario(sucesso.data)
                 setPlano(sucesso.data.membership)
                 setBeneficios(sucesso.data.membership.perks)
                 navigate('/home')
